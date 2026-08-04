@@ -49,3 +49,13 @@ def get_batch(split):
     y = torch.stack([d[i+1:i+ block_size + 1]for i in ix])
     return x, y
 
+# model
+
+class SelfAttention(nn.Module):
+    def __init__(self, d_model, n_heads):
+        super().__init__()
+        self.n_heads = n_heads
+        self.head_dim = d_model // n_heads
+        self.qkv = nn.Linear(d_model, 3 *d_model)
+        self.proj = nn.Linear(d_model, d_model)
+        
