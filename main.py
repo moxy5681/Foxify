@@ -41,3 +41,10 @@ n_heads = 4
 n_layers = 2
 block_size = 64
 batch_size = 32
+
+def get_batch(split):
+    d = train_data if split == 'train' else val_data
+    ix = torch.randint(0,len(d) - block_size - 1, (batch_size,))
+    x = torch.stack([d[i:i+block_size] for i in ix])
+    y = torch.stack([d[i+1:i+ block_size + 1]for i in ix])
+
