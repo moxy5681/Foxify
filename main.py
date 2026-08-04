@@ -47,4 +47,5 @@ def get_batch(split):
     ix = torch.randint(0,len(d) - block_size - 1, (batch_size,))
     x = torch.stack([d[i:i+block_size] for i in ix])
     y = torch.stack([d[i+1:i+ block_size + 1]for i in ix])
+    return x, y
 
