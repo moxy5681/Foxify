@@ -58,4 +58,11 @@ class SelfAttention(nn.Module):
         self.head_dim = d_model // n_heads
         self.qkv = nn.Linear(d_model, 3 *d_model)
         self.proj = nn.Linear(d_model, d_model)
-        
+
+    def forward(self, x) :
+        B, T, C = x.shape
+        qkv = self.qkv(x)
+        q, k, v, = qkv.split(C, dim=2)
+        q = q.view(B, T, self.n_heads, self.head_dim).transpose(1,2)
+        k = k.view(B, T, self.n_heads, self.head_dim).transpose(1,2)
+        v = v.view(B, T, self.n_heads, self.head_dim).transpose(1,2)
