@@ -87,4 +87,8 @@ class Block(nn.Module):
             nn.GELU()
             nn.Linear(4 * d_model, d_model),
         )
+    def forward(self, x) :
+        x = x + self.attn(self.ln1(x))
+        x = x + self.mlp(self.ln2(x))
+        return x
 
